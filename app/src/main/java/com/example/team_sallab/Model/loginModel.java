@@ -5,6 +5,23 @@ public class loginModel
     String name , password;
     int success;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    String message;
+
+    public int getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(int success) {
+        this.success = success;
+    }
 //    public loginModel(String name , String password)
 //    {
 //        this.name = name;

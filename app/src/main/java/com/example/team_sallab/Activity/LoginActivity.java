@@ -5,11 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.example.team_sallab.Api.LoginApi;
 import com.example.team_sallab.R;
 import com.example.team_sallab.Model.loginModel;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +23,7 @@ public class LoginActivity extends AppCompatActivity implements Callback<loginMo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Retrofit retrofit= getInstance();
+        Retrofit retrofit = getInstance("http://192.168.1.127/testApi/login.php");
         LoginApi login = retrofit.create(LoginApi.class);
         Call<loginModel> call = login.getData("name", "123456");
         call.enqueue(this);
