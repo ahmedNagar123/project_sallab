@@ -3,6 +3,7 @@ package com.example.team_sallab.Model;
 public class loginModel
 {
     String name , password;
+    String message;
     int success;
 
     public String getMessage() {
@@ -13,7 +14,7 @@ public class loginModel
         this.message = message;
     }
 
-    String message;
+
 
     public int getSuccess() {
         return success;
@@ -22,11 +23,7 @@ public class loginModel
     public void setSuccess(int success) {
         this.success = success;
     }
-//    public loginModel(String name , String password)
-//    {
-//        this.name = name;
-//        this.password = password;
-//    }
+
 
     public String getName()
     {
