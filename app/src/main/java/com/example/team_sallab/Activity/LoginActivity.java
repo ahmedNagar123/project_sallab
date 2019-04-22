@@ -1,6 +1,7 @@
 package com.example.team_sallab.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.example.team_sallab.Api.ApiUtils;
 import com.example.team_sallab.Api.LoginApi;
 import com.example.team_sallab.R;
 import com.example.team_sallab.Model.loginModel;
+import com.example.team_sallab.pref.prefConfig;
 
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
@@ -26,6 +28,9 @@ public class LoginActivity extends AppCompatActivity implements Callback<loginMo
     EditText etuserName,etpassword;
     Button btnLogin;
      LoginApi login;
+//    private SharedPreferences preferences;
+    private prefConfig prefConfig;
+
 
 
     @Override
@@ -38,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements Callback<loginMo
         btnLogin=findViewById(R.id.btSignup3);
         btnLogin.setOnClickListener(this);
         login= ApiUtils.getLogin();
-
+//        preferences=getSharedPreferences("user",MODE_PRIVATE);
 
 
     }
@@ -68,12 +73,23 @@ public class LoginActivity extends AppCompatActivity implements Callback<loginMo
     public void onResponse(Call<loginModel> call, Response<loginModel> response) {
         if(response.isSuccessful()) {
             loginModel loginModel = response.body();
-            if (loginModel.getMessage().equals("true")) {
+            if (loginModel.getResponse().equals("ok")) {
                 // login start Activity
-                Log.e("success",response.message());
+                prefConfig.writeLoginStatus(true);
+                String name = loginModel.getName();
+                String password = loginModel.getPassword();
+                prefConfig.writeName(name);
+                prefConfig.writepassword(password);
+                prefConfig.displayToast("Login Success");
+                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                finish();
 
-            } else {
-                Toast.makeText(this, "userName And Password Incorrect", Toast.LENGTH_SHORT).show();
+
+//                Log.e("success",response.message());
+
+            } else if(loginModel.getResponse().equals("failed")) {
+//                Toast.makeText(this, "userName And Password Incorrect", Toast.LENGTH_SHORT).show();
+                prefConfig.displayToast("userName And Password Incorrect");
 
             }
 
@@ -88,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements Callback<loginMo
         Toast.makeText(LoginActivity.this,"Failed" ,Toast.LENGTH_LONG).show();
         Log.e("login Activity" , t.getMessage());
     }
+
 
 
 }

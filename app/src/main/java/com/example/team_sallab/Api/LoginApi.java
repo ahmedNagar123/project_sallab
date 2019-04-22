@@ -10,12 +10,12 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface LoginApi {
-    @FormUrlEncoded
-    @POST("login.php/{userName}/{password}")
+    @POST("login.php")
     Call<loginModel> getData(
-            @Path("userName") String userName,
-            @Path("password") String password
+            @Query("userName") String userName,
+            @Query("password") String password
     );
 }
